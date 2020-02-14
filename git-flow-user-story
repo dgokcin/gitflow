@@ -143,7 +143,7 @@ expand_nameprefix_arg() {
 	esac
 }
 
-use_current_user-story_branch_name() {
+use_current_user_story_branch_name() {
 	local current_branch=$(git_current_branch)
 	if startswith "$current_branch" "$PREFIX"; then
 		BRANCH=$current_branch
@@ -160,13 +160,13 @@ expand_nameprefix_arg_or_current() {
 		expand_nameprefix_arg
 		require_branch "$PREFIX$NAME"
 	else
-		use_current_user-story_branch_name
+		use_current_user_story_branch_name
 	fi
 }
 
 name_or_current() {
 	if [ -z "$NAME" ]; then
-		use_current_user-story_branch_name
+		use_current_user_story_branch_name
 	fi
 }
 
