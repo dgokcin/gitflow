@@ -194,9 +194,9 @@ parse_remote_name() {
 cmd_start() {
 	DEFINE_boolean fetch false 'fetch from origin before performing local operation' F
 	parse_args "$@"
-	BASE=$current_branch
 	require_name_arg
 	current_branch=$(git branch --no-color | grep '^\* ' | grep -v 'no branch' | sed 's/^* //g')
+	BASE=$current_branch
     echo "$BASE"
     echo "$current_branch"
 
