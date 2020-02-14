@@ -213,6 +213,9 @@ cmd_start() {
 
 	# create branch
 	if ! git checkout -b "$BRANCH" "$BASE"; then
+
+        echo "branch: $BRANCH"
+        echo "base: $BASE"
 		die "Could not create us branch '$BRANCH'"
 	fi
 
