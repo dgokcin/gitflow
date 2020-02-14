@@ -197,8 +197,8 @@ cmd_start() {
 	require_name_arg
 	current_branch=$(git branch --no-color | grep '^\* ' | grep -v 'no branch' | sed 's/^* //g')
 	BASE=$current_branch
-    echo "$BASE"
-    echo "$current_branch"
+    #echo "$BASE"
+    #echo "$current_branch"
 
 	# sanity checks
 	require_branch_absent "$BRANCH"
@@ -282,6 +282,9 @@ cmd_finish() {
 
 	# sanity checks
 	require_clean_working_tree
+
+    #TODO somehow extract the branch you want to merge
+	current_branch=$(git branch --no-color | grep '^\* ' | grep -v 'no branch' | sed 's/^* //g')
 
 	# update local repo with remote changes first, if asked
 	if has "$ORIGIN/$BRANCH" "$(git_remote_branches)"; then
