@@ -284,7 +284,11 @@ cmd_finish() {
 	require_clean_working_tree
 
     #TODO somehow extract the branch you want to merge
-	current_branch=$(git branch --no-color | grep '^\* ' | grep -v 'no branch' | sed 's/^* //g')
+    printf "Feature branch that you want to merge into?"
+    read answer
+    printf "\n"
+    target_branch="$answer"
+    echo "$answer"
 
 	# update local repo with remote changes first, if asked
 	if has "$ORIGIN/$BRANCH" "$(git_remote_branches)"; then
@@ -296,24 +300,24 @@ cmd_finish() {
 	if has "$ORIGIN/$BRANCH" "$(git_remote_branches)"; then
 		require_branches_equal "$BRANCH" "$ORIGIN/$BRANCH"
 	fi
-	if has "$ORIGIN/$current_branch" "$(git_remote_branches)"; then
-		require_branches_equal "$current_branch" "$ORIGIN/$current_branch"
+	if has "$ORIGIN/$target_branch" "$(git_remote_branches)"; then
+		require_branches_equal "$target_branch" "$ORIGIN/$target_branch"
 	fi
 
 	# if the user wants to rebase, do that first
 	if flag rebase; then
-		if ! git flow user-story rebase "$NAME" "$current_branch"; then
+		if ! git flow user-story rebase "$NAME" "$target_branch"; then
 			warn "Finish was aborted due to conflicts during rebase."
 			warn "Please finish the rebase manually now."
 			warn "When finished, re-run:"
-			warn "    git flow user-story finish '$NAME' '$current_branch'"
+			warn "    git flow user-story finish '$NAME' '$target_branch'"
 			exit 1
 		fi
 	fi
 
 	# merge into BASE
-	git checkout "$current_branch"
-	if [ "$(git rev-list -n2 "$current_branch..$BRANCH" | wc -l)" -eq 1 ]; then
+	git checkout "$target_branch"
+	if [ "$(git rev-list -n2 "$target_branch..$BRANCH" | wc -l)" -eq 1 ]; then
 		git merge --ff "$BRANCH"
 	else
 		git merge --no-ff "$BRANCH"
@@ -321,9 +325,9 @@ cmd_finish() {
 
 	if [ $? -ne 0 ]; then
 		# oops.. we have a merge conflict!
-		# write the given $current_branch to a temporary file (we need it later)
+		# write the given $target_branch to a temporary file (we need it later)
 		mkdir -p "$DOT_GIT_DIR/.gitflow"
-		echo "$current_branch" > "$DOT_GIT_DIR/.gitflow/MERGE_BASE"
+		echo "$target_branch" > "$DOT_GIT_DIR/.gitflow/MERGE_BASE"
 		echo
 		echo "There were merge conflicts. To resolve the merge conflict manually, use:"
 		echo "    git mergetool"
@@ -356,7 +360,7 @@ helper_finish_cleanup() {
 
 	echo
 	echo "Summary of actions:"
-	echo "- The user-story branch '$BRANCH' was merged into '$current_branch'"
+	echo "- The user-story branch '$BRANCH' was merged into '$target_branch'"
 	#echo "- Merge conflicts were resolved"		# TODO: Add this line when it's supported
 	if flag keep; then
 		echo "- user-story branch '$BRANCH' is still available"
