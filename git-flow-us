@@ -212,16 +212,16 @@ cmd_start() {
 	fi
 
 	# create branch
-	if ! git checkout -b "$BRANCH" "$BASE"; then
+	if ! git checkout -b "$BRANCH" "$current_branch"; then
 
         echo "branch: $BRANCH"
-        echo "base: $BASE"
+        echo "base: $current_branch"
 		die "Could not create us branch '$BRANCH'"
 	fi
 
 	echo
 	echo "Summary of actions:"
-	echo "- A new branch '$BRANCH' was created, based on '$BASE'"
+	echo "- A new branch '$BRANCH' was created, based on '$current_branch'"
 	echo "- You are now on branch '$BRANCH'"
 	echo ""
 	echo "Now, start committing on your us. When done, use:"
