@@ -197,6 +197,7 @@ cmd_start() {
 	BASE=${2:-$current_branch}
 	require_name_arg
 	current_branch=$(git branch --no-color | grep '^\* ' | grep -v 'no branch' | sed 's/^* //g')
+    echo "$BASE"
     echo "$current_branch"
 
 	# sanity checks
