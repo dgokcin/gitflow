@@ -286,7 +286,6 @@ cmd_finish() {
     read answer
     printf "\n"
     target_branch="feature/$answer"
-    #echo "$answer"
 
 	# update local repo with remote changes first, if asked
 	if has "$ORIGIN/$target_branch" "$(git_remote_branches)"; then
@@ -365,7 +364,7 @@ helper_finish_cleanup() {
 	else
 		echo "- User Story branch '$BRANCH' has been removed"
 	fi
-	echo "- You are now on branch '$git_current_branch')"
+	echo "- You are now on branch '$target_branch)"
 	echo
 }
 
