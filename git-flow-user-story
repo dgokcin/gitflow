@@ -42,15 +42,15 @@ gitflow_load_settings
 PREFIX=$(git config --get gitflow.prefix.user-story)
 
 usage() {
-	echo "usage: git flow user-story [list] [-v]"
+    #echo "usage: git flow user-story [list] [-v]"
 	echo "       git flow user-story start [-F] <name> [<base>]"
 	echo "       git flow user-story finish [-rFk] <name|nameprefix>"
 	echo "       git flow user-story publish <name>"
-	echo "       git flow user-story track <name>"
-	echo "       git flow user-story diff [<name|nameprefix>]"
-	echo "       git flow user-story rebase [-i] [<name|nameprefix>]"
-	echo "       git flow user-story checkout [<name|nameprefix>]"
-	echo "       git flow user-story pull <remote> [<name>]"
+	#echo "       git flow user-story track <name>"
+	#echo "       git flow user-story diff [<name|nameprefix>]"
+	#echo "       git flow user-story rebase [-i] [<name|nameprefix>]"
+	#echo "       git flow user-story checkout [<name|nameprefix>]"
+	#echo "       git flow user-story pull <remote> [<name>]"
 }
 
 cmd_default() {
