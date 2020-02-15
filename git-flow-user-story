@@ -42,15 +42,15 @@ gitflow_load_settings
 PREFIX=$(git config --get gitflow.prefix.user-story)
 
 usage() {
-	echo "usage: git flow user-story [list] [-v]"
+    #echo "usage: git flow user-story [list] [-v]"
 	echo "       git flow user-story start [-F] <name> [<base>]"
 	echo "       git flow user-story finish [-rFk] <name|nameprefix>"
 	echo "       git flow user-story publish <name>"
-	echo "       git flow user-story track <name>"
-	echo "       git flow user-story diff [<name|nameprefix>]"
-	echo "       git flow user-story rebase [-i] [<name|nameprefix>]"
-	echo "       git flow user-story checkout [<name|nameprefix>]"
-	echo "       git flow user-story pull <remote> [<name>]"
+	#echo "       git flow user-story track <name>"
+	#echo "       git flow user-story diff [<name|nameprefix>]"
+	#echo "       git flow user-story rebase [-i] [<name|nameprefix>]"
+	#echo "       git flow user-story checkout [<name|nameprefix>]"
+	#echo "       git flow user-story pull <remote> [<name>]"
 }
 
 cmd_default() {
@@ -197,8 +197,6 @@ cmd_start() {
 	require_name_arg
 	current_branch=$(git branch --no-color | grep '^\* ' | grep -v 'no branch' | sed 's/^* //g')
 	BASE=$current_branch
-    #echo "$BASE"
-    #echo "$current_branch"
 
 	# sanity checks
 	require_branch_absent "$BRANCH"
@@ -253,6 +251,7 @@ cmd_finish() {
 		# actually be testing for here
 		if git_is_clean_working_tree; then
 			FINISH_BASE=$(cat "$DOT_GIT_DIR/.gitflow/MERGE_BASE")
+            echo "fb $FINISH_BASE"
 
 			# Since the working tree is now clean, either the user did a
 			# succesfull merge manually, or the merge was cancelled.
@@ -291,7 +290,7 @@ cmd_finish() {
     #echo "$answer"
 
 	# update local repo with remote changes first, if asked
-	if has "$ORIGIN/$BRANCH" "$(git_remote_branches)"; then
+	if has "$ORIGIN/$target_branch" "$(git_remote_branches)"; then
 		if flag fetch; then
 			git fetch -q "$ORIGIN" "$BRANCH"
 		fi
