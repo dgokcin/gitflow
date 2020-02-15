@@ -284,11 +284,11 @@ cmd_finish() {
 	require_clean_working_tree
 
     #TODO somehow extract the branch you want to merge
-    printf "Feature branch that you want to merge into?"
+    printf "Feature branch that you want to merge into: "
     read answer
     printf "\n"
-    target_branch="$answer"
-    echo "$answer"
+    target_branch="feature/$answer"
+    #echo "$answer"
 
 	# update local repo with remote changes first, if asked
 	if has "$ORIGIN/$BRANCH" "$(git_remote_branches)"; then
