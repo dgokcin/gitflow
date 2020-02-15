@@ -251,7 +251,6 @@ cmd_finish() {
 		# actually be testing for here
 		if git_is_clean_working_tree; then
 			FINISH_BASE=$(cat "$DOT_GIT_DIR/.gitflow/MERGE_BASE")
-            echo "fb $FINISH_BASE"
 
 			# Since the working tree is now clean, either the user did a
 			# succesfull merge manually, or the merge was cancelled.
