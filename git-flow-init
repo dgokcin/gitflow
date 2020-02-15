@@ -231,6 +231,7 @@ cmd_default() {
 	# finally, ask the user for naming conventions (branch and tag prefixes)
 	if flag force || \
 	   ! git config --get gitflow.prefix.feature >/dev/null 2>&1 || 
+	   ! git config --get gitflow.prefix.us >/dev/null 2>&1 || 
 	   ! git config --get gitflow.prefix.release >/dev/null 2>&1 || 
 	   ! git config --get gitflow.prefix.hotfix >/dev/null 2>&1 || 
 	   ! git config --get gitflow.prefix.support >/dev/null 2>&1 || 
@@ -253,6 +254,32 @@ cmd_default() {
 		[ "$answer" = "-" ] && prefix= || prefix=${answer:-$default_suggestion}
 		git_do config gitflow.prefix.feature "$prefix"
 	fi
+
+	# User Story branches
+	if ! git config --get gitflow.prefix.user-story >/dev/null 2>&1 || flag force; then
+		default_suggestion=$(git config --get gitflow.prefix.user-story || echo user-story/)
+		printf "User Story branches? [$default_suggestion] "
+		if noflag defaults; then
+			read answer
+		else
+			printf "\n"
+		fi
+		[ "$answer" = "-" ] && prefix= || prefix=${answer:-$default_suggestion}
+		git config gitflow.prefix.user-story "$prefix"
+	fi
+
+    #us branches
+    #if ! git config --get gitflow.prefix.us >/dev/null 2>&1 || flag force; then
+        #default_suggestion=$(git config --get gitflow.prefix.us || echo us/)
+        #printf "User Story branches? [$default_suggestion] "
+        #if noflag defaults; then
+            #read answer
+        #else
+            #printf "\n"
+        #fi
+        #[ "$answer" = "-" ] && prefix= || prefix=${answer:-$default_suggestion}
+        #git config gitflow.prefix.us "$prefix"
+    #fi
 
 	# Release branches
 	if ! git config --get gitflow.prefix.release >/dev/null 2>&1 || flag force; then
