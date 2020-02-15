@@ -358,14 +358,14 @@ helper_finish_cleanup() {
 
 	echo
 	echo "Summary of actions:"
-	echo "- The user-story branch '$BRANCH' was merged into '$target_branch'"
+	echo "- The User Story branch '$BRANCH' was merged into '$target_branch'"
 	#echo "- Merge conflicts were resolved"		# TODO: Add this line when it's supported
 	if flag keep; then
-		echo "- user-story branch '$BRANCH' is still available"
+		echo "- User Story branch '$BRANCH' is still available"
 	else
-		echo "- user-story branch '$BRANCH' has been removed"
+		echo "- User Story branch '$BRANCH' has been removed"
 	fi
-	echo "- You are now on branch '$current_branch'"
+	echo "- You are now on branch '$git_current_branch')"
 	echo
 }
 
