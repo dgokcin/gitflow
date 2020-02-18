@@ -153,7 +153,7 @@ expand_nameprefix_arg() {
 	esac
 }
 
-use_current_user-story_branch_name() {
+use_current_user_story_branch_name() {
 	local current_branch=$(git_current_branch)
 	if startswith "$current_branch" "$PREFIX"; then
 		BRANCH=$current_branch
@@ -170,13 +170,13 @@ expand_nameprefix_arg_or_current() {
 		expand_nameprefix_arg
 		require_branch "$PREFIX$NAME"
 	else
-		use_current_user-story_branch_name
+		use_current_user_story_branch_name
 	fi
 }
 
 name_or_current() {
 	if [ -z "$NAME" ]; then
-		use_current_user-story_branch_name
+		use_current_user_story_branch_name
 	fi
 }
 
@@ -246,10 +246,13 @@ cmd_finish() {
 	DEFINE_boolean force_delete false "force delete user-story branch after finish" D
 	DEFINE_boolean squash false "squash user-story during merge" S
 	parse_args "$@"
+	require_name_arg
+	require_target_arg
 	expand_nameprefix_arg_or_current
 
 	# sanity checks
 	require_branch "$BRANCH"
+	require_branch "$TARGET_BRANCH"
 
 	# detect if we're restoring from a merge conflict
 	if [ -f "$DOT_GIT_DIR/.gitflow/MERGE_BASE" ]; then
@@ -357,6 +360,7 @@ cmd_finish() {
 helper_finish_cleanup() {
 	# sanity checks
 	require_branch "$BRANCH"
+	require_branch "$TARGET_BRANCH"
 	require_clean_working_tree
 
 	# delete branch
